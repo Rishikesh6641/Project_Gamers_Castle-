@@ -25,4 +25,6 @@ public class Product extends BaseEntity{
 	private int stock;
 	@Column(nullable = false)
 	private String image;
+	@Column(length = 100)
+	private String brand;
 }
