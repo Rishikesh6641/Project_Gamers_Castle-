@@ -1,8 +1,5 @@
 package com.gc.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,7 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 
 public class ProductDto {
-	@JsonProperty(access=Access.READ_ONLY)
+	//@JsonProperty(access=Access.READ_ONLY)
     private String productName;
 	private String description;
 	private Double price;

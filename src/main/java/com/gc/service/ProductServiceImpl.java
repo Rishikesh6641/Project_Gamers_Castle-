@@ -12,7 +12,10 @@ import com.gc.Exception.ResourceNotFoundException;
 import com.gc.dto.ApiResponse;
 import com.gc.dto.ProductDto;
 import com.gc.repository.ProductRepository;
+
+import jakarta.transaction.Transactional;
 @Service
+@Transactional
 public class ProductServiceImpl implements ProductService{
 	
 	@Autowired
@@ -40,16 +43,25 @@ public class ProductServiceImpl implements ProductService{
 	}
 	
 	@Override
-	public List<Product> viewProduct() {
-		return repo.findAll();
+	public List<ProductDto> viewProduct() {
+		
+		List<Product> data=repo.findAll();
+		List<ProductDto> dtoList=data.stream()
+				.map(product -> mapper.map(product,ProductDto.class))
+				.toList();
+		return dtoList;
 	}
 
 	@Override
-	public ApiResponse updateStock(String product_name, int stock) {
+	public ApiResponse updateStock(Long id, int stock) {
 		
-		Optional<Product> p=repo.findByProductName(product_name);
-		Product product = p.orElseThrow(()->new ResourceNotFoundException("No Such Product"));
+//		Optional<Product> p=repo.findByProductName(product_name);
+//		Product product = p.orElseThrow(()->new ResourceNotFoundException("No Such Product"));
+//		product.setStock(product.getStock()+stock);
+		Optional<Product> p= repo.findById(id);
+		Product product=p.orElseThrow(()->new ResourceNotFoundException("No Such Product"));
 		product.setStock(product.getStock()+stock);
+		repo.save(product);
 		return new ApiResponse("Stock Updated Succefully....");
 	}
 }
