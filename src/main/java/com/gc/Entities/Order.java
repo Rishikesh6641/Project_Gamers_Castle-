@@ -33,6 +33,6 @@ public class Order extends BaseEntity{
 	@Enumerated(EnumType.STRING)
 	private Status status;
 	@OneToMany
-	@JoinColumn(name = "OrderDetail_id")
+	//@JoinColumn(name = "order_details_id")
 	private List<OrderDetails> order_Details;
 }
